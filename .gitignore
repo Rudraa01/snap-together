@@ -1,0 +1,19 @@
+# Don't commit these files
+node_modules/
+.env
+.env.local
+.vercel
+*.log
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+.next/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

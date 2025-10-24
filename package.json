@@ -1,0 +1,29 @@
+{
+  "name": "snaptogether-photo-merger",
+  "version": "1.0.0",
+  "description": "AI-powered photo merging website that combines people from different photos",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "photo-merge",
+    "ai",
+    "gemini",
+    "image-generation",
+    "photo-editing"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0"
+  },
+  "devDependencies": {
+    "vercel": "^37.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

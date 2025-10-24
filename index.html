@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapTogether - Merge People in Photos</title>
+    <meta name="description" content="Create amazing merged photos by combining people from different images. Perfect for families, couples, and cherished memories.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="10" cy="10" r="8" fill="url(#gradient1)"/>
+                    <circle cx="22" cy="22" r="8" fill="url(#gradient2)"/>
+                    <defs>
+                        <linearGradient id="gradient1" x1="0" y1="0" x2="20" y2="20">
+                            <stop offset="0%" style="stop-color:#667eea"/>
+                            <stop offset="100%" style="stop-color:#764ba2"/>
+                        </linearGradient>
+                        <linearGradient id="gradient2" x1="0" y1="0" x2="30" y2="30">
+                            <stop offset="0%" style="stop-color:#f093fb"/>
+                            <stop offset="100%" style="stop-color:#f5576c"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>SnapTogether</span>
+            </div>
+            <div class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#features">Features</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Bring People Together<br>
+                    <span class="gradient-text">In One Perfect Photo</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Merge photos of loved ones from different moments into a single beautiful image. 
+                    Perfect for families, couples, and creating memories that never happened... until now.
+                </p>
+                <a href="#upload" class="cta-button">
+                    <span>Start Creating</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 15L12.5 10L7.5 5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card card-1">
+                    <div class="image-placeholder">📸</div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="image-placeholder">👨‍👩‍👧‍👦</div>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="image-placeholder">❤️</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">📤</div>
+                    <h3>Upload Two Photos</h3>
+                    <p>Select two separate photos of the people you want to merge together</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🎨</div>
+                    <h3>Choose a Pose</h3>
+                    <p>Select from various poses: hugging, standing together, sitting, and more</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">✨</div>
+                    <h3>AI Magic</h3>
+                    <p>Our AI seamlessly merges the photos with perfect lighting and positioning</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">💾</div>
+                    <h3>Download & Share</h3>
+                    <p>Get your beautiful merged photo ready to download and share</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section id="upload" class="section upload-section">
+        <div class="container">
+            <h2 class="section-title">Create Your Photo</h2>
+            
+            <!-- Upload Area -->
+            <div class="upload-container">
+                <div class="upload-box">
+                    <input type="file" id="photo1" accept="image/*" hidden>
+                    <label for="photo1" class="upload-label">
+                        <div class="upload-content" id="preview1-container">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <h3>First Photo</h3>
+                            <p>Click to upload or drag & drop</p>
+                            <span class="file-info">PNG, JPG up to 10MB</span>
+                        </div>
+                        <img id="preview1" class="preview-image" style="display: none;">
+                        <button type="button" class="remove-btn" id="remove1" style="display: none;">×</button>
+                    </label>
+                </div>
+
+                <div class="plus-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 5v14M5 12h14" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+
+                <div class="upload-box">
+                    <input type="file" id="photo2" accept="image/*" hidden>
+                    <label for="photo2" class="upload-label">
+                        <div class="upload-content" id="preview2-container">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <h3>Second Photo</h3>
+                            <p>Click to upload or drag & drop</p>
+                            <span class="file-info">PNG, JPG up to 10MB</span>
+                        </div>
+                        <img id="preview2" class="preview-image" style="display: none;">
+                        <button type="button" class="remove-btn" id="remove2" style="display: none;">×</button>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pose Selection -->
+            <div class="pose-selection" id="poseSelection" style="display: none;">
+                <h3 class="pose-title">Choose a Pose</h3>
+                <div class="pose-grid">
+                    <div class="pose-card" data-pose="hugging">
+                        <div class="pose-emoji">🤗</div>
+                        <h4>Hugging</h4>
+                        <p>Warm embrace</p>
+                    </div>
+                    <div class="pose-card" data-pose="standing">
+                        <div class="pose-emoji">🧍‍♂️🧍‍♀️</div>
+                        <h4>Standing Together</h4>
+                        <p>Side by side</p>
+                    </div>
+                    <div class="pose-card" data-pose="sitting">
+                        <div class="pose-emoji">🪑</div>
+                        <h4>Sitting</h4>
+                        <p>Relaxed pose</p>
+                    </div>
+                    <div class="pose-card" data-pose="holding-hands">
+                        <div class="pose-emoji">👫</div>
+                        <h4>Holding Hands</h4>
+                        <p>Romantic touch</p>
+                    </div>
+                    <div class="pose-card" data-pose="shoulder-to-shoulder">
+                        <div class="pose-emoji">🤝</div>
+                        <h4>Shoulder to Shoulder</h4>
+                        <p>Close friends</p>
+                    </div>
+                    <div class="pose-card" data-pose="parent-child">
+                        <div class="pose-emoji">👨‍👧</div>
+                        <h4>Parent & Child</h4>
+                        <p>Family moment</p>
+                    </div>
+                    <div class="pose-card" data-pose="group-photo">
+                        <div class="pose-emoji">👨‍👩‍👧‍👦</div>
+                        <h4>Group Photo</h4>
+                        <p>Family portrait</p>
+                    </div>
+                    <div class="pose-card" data-pose="casual">
+                        <div class="pose-emoji">😊</div>
+                        <h4>Casual</h4>
+                        <p>Natural stance</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generate Button -->
+            <div class="generate-section" id="generateSection" style="display: none;">
+                <button class="generate-button" id="generateBtn">
+                    <span>Generate Merged Photo</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 12h14M12 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-container" id="loadingContainer" style="display: none;">
+                <div class="loading-spinner"></div>
+                <h3>Creating Your Masterpiece...</h3>
+                <p>Our AI is merging the photos with perfect harmony</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Result Section -->
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="result-card">
+                    <h3>Your Merged Photo</h3>
+                    <div class="result-image-container">
+                        <img id="resultImage" class="result-image" alt="Merged photo">
+                    </div>
+                    <div class="result-actions">
+                        <button class="download-button" id="downloadBtn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Download Photo
+                        </button>
+                        <button class="secondary-button" id="createAnotherBtn">
+                            Create Another
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section features-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose SnapTogether?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>AI-Powered</h3>
+                    <p>Advanced Google Gemini AI creates realistic, seamless photo merges</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast & Easy</h3>
+                    <p>Get your merged photo in seconds with just a few clicks</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎭</div>
+                    <h3>Multiple Poses</h3>
+                    <p>Choose from various poses perfect for any relationship</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Private & Secure</h3>
+                    <p>Your photos are processed securely and never stored</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Works Everywhere</h3>
+                    <p>Use on any device - desktop, tablet, or mobile</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💝</div>
+                    <h3>Perfect for Gifts</h3>
+                    <p>Create unique photo gifts for loved ones</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="section use-cases-section">
+        <div class="container">
+            <h2 class="section-title">Perfect For...</h2>
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-emoji">💑</div>
+                    <h3>Couples</h3>
+                    <p>Create romantic photos together, even when apart</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-emoji">👨‍👩‍👧‍👦</div>
+                    <h3>Families</h3>
+                    <p>Combine family members from different photos into one</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-emoji">👶</div>
+                    <h3>Parent & Child</h3>
+                    <p>Merge your childhood photo with your child's current photo</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-emoji">🎁</div>
+                    <h3>Special Gifts</h3>
+                    <p>Create unique personalized gifts for anniversaries and birthdays</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="8" fill="url(#gradient1)"/>
+                            <circle cx="22" cy="22" r="8" fill="url(#gradient2)"/>
+                        </svg>
+                        <span>SnapTogether</span>
+                    </div>
+                    <p>Bringing people together, one photo at a time.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#how-it-works">How It Works</a>
+                        <a href="#features">Features</a>
+                        <a href="#upload">Get Started</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="#">Help Center</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SnapTogether. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
