@@ -12,7 +12,7 @@ SnapTogether is a modern web application that uses AI to merge people from diffe
 
 - 🖼️ **Upload Two Photos**: Simple drag-and-drop or click to upload
 - 🎭 **Multiple Poses**: Choose from 8+ different poses (hugging, standing, sitting, etc.)
-- 🤖 **AI-Powered**: Leverages Google Gemini AI for intelligent photo analysis
+- 🤖 **AI-Powered**: Leverages Google Gemini AI for intelligent photo analysis.
 - ⚡ **Fast & Responsive**: Modern UI with smooth animations
 - 📱 **Mobile-Friendly**: Works perfectly on all devices
 - 🔒 **Privacy-Focused**: Photos are processed securely and not stored

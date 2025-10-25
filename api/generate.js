@@ -16,9 +16,14 @@ const corsHeaders = {
  * Main handler function
  */
 module.exports = async (req, res) => {
+    // Set CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
     // Handle CORS preflight
     if (req.method === 'OPTIONS') {
-        return res.status(200).json({});
+        return res.status(200).end();
     }
 
     // Only allow POST requests
@@ -44,21 +49,20 @@ module.exports = async (req, res) => {
         const apiKey = process.env.GEMINI_API_KEY;
         
         if (!apiKey) {
+            console.error('GEMINI_API_KEY not found in environment variables');
             return res.status(500).json({ 
-                error: 'API key not configured. Please set GEMINI_API_KEY in Vercel environment variables.',
+                error: 'API key not configured. Please set GEMINI_API_KEY in environment variables.',
                 success: false 
             });
         }
 
+        console.log('API Key found, initializing Gemini AI...');
+
         // Initialize Gemini AI
         const genAI = new GoogleGenerativeAI(apiKey);
         
-        // Use Gemini 2.0 Flash for image generation (or appropriate model)
-        // Note: As of current date, Gemini primarily focuses on understanding images
-        // For actual image generation, you might need to use Imagen API
-        // This is a placeholder implementation - adjust based on actual API availability
-        
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+        // Use Gemini 1.5 Flash (stable model)
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         // Convert base64 images to format Gemini expects
         const photo1Data = photo1.split(',')[1]; // Remove data:image/...;base64, prefix
@@ -101,6 +105,8 @@ Important requirements:
         // 2. Use Gemini to analyze the images and create a detailed description
         // 3. Pass that description to an image generation service
         
+        console.log('Sending request to Gemini API...');
+        
         const result = await model.generateContent([
             enhancedPrompt,
             ...imageParts
@@ -109,25 +115,18 @@ Important requirements:
         const response = await result.response;
         const text = response.text();
 
-        // IMPORTANT: This is a placeholder response
-        // In production, you would:
-        // 1. Use the Gemini response to refine your prompt
-        // 2. Call an actual image generation API (like Imagen, DALL-E, etc.)
-        // 3. Return the generated image URL
+        console.log('Gemini API response received successfully');
 
-        // For now, we'll return a success with instructions
+        // IMPORTANT: Gemini analyzes images but doesn't generate them
+        // This returns the first photo as a placeholder
+        // For production: integrate with Replicate, DALL-E, or Imagen for actual generation
+        
         return res.status(200).json({
             success: true,
-            message: 'Analysis complete',
+            message: 'Photo analysis complete! (Currently returning original photo as demo)',
             analysis: text,
-            imageUrl: photo1, // Placeholder - in production, return actual generated image
-            note: 'This is a demo response. In production, integrate with Imagen API or similar image generation service.',
-            instructions: {
-                step1: 'Get Google Imagen API access',
-                step2: 'Use Gemini analysis to create detailed prompt',
-                step3: 'Generate image with Imagen API',
-                step4: 'Return the generated image URL'
-            }
+            imageUrl: photo1, // Returns first photo - replace with actual generated image in production
+            note: 'Demo mode: To generate actual merged photos, integrate with Replicate or DALL-E API. See README.md for instructions.'
         });
 
     } catch (error) {
