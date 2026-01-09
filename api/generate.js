@@ -1,9 +1,7 @@
 /**
  * Vercel Serverless Function for Google Gemini Image Generation
- * This API endpoint handles photo merging using Google's Gemini AI
+ * This API endpoint handles photo merging using Google's Gemini AI via OpenRouter
  */
-
-const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // CORS headers for all responses
 const corsHeaders = {
@@ -46,27 +44,18 @@ module.exports = async (req, res) => {
         }
 
         // Get API key from environment variable
-        const apiKey = process.env.GEMINI_API_KEY;
+        // Accepts either OPENROUTER_API_KEY or GEMINI_API_KEY (if user reused the variable name)
+        const apiKey = process.env.OPENROUTER_API_KEY || process.env.GEMINI_API_KEY;
         
         if (!apiKey) {
-            console.error('GEMINI_API_KEY not found in environment variables');
+            console.error('API Key not found in environment variables (OPENROUTER_API_KEY or GEMINI_API_KEY)');
             return res.status(500).json({ 
-                error: 'API key not configured. Please set GEMINI_API_KEY in environment variables.',
+                error: 'API key not configured. Please set OPENROUTER_API_KEY in environment variables.',
                 success: false 
             });
         }
 
-        console.log('API Key found, initializing Gemini AI...');
-
-        // Initialize Gemini AI
-        const genAI = new GoogleGenerativeAI(apiKey);
-        
-        // Use Gemini 1.5 Flash (stable model)
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-        // Convert base64 images to format Gemini expects
-        const photo1Data = photo1.split(',')[1]; // Remove data:image/...;base64, prefix
-        const photo2Data = photo2.split(',')[1];
+        console.log('API Key found, authorizing with OpenRouter...');
 
         // Create enhanced prompt with both images
         const enhancedPrompt = `${prompt}
@@ -82,40 +71,53 @@ Important requirements:
 - Make it look like a real photograph, not a composite
 - Ensure both people are clearly visible and well-composed`;
 
-        // Prepare image parts for Gemini
-        const imageParts = [
-            {
-                inlineData: {
-                    data: photo1Data,
-                    mimeType: "image/jpeg"
-                }
+        console.log('Sending request to OpenRouter API (google/gemini-flash-1.5)...');
+        
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${apiKey}`,
+                "HTTP-Referer": "https://snaptogether.vercel.app", // Site URL for rankings on OpenRouter
+                "X-Title": "SnapTogether", // Site title for rankings on OpenRouter
+                "Content-Type": "application/json"
             },
-            {
-                inlineData: {
-                    data: photo2Data,
-                    mimeType: "image/jpeg"
-                }
-            }
-        ];
+            body: JSON.stringify({
+                "model": "google/gemini-flash-1.5",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": enhancedPrompt
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": photo1 // Keep the data:image prefix for OpenRouter
+                                }
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": photo2
+                                }
+                            }
+                        ]
+                    }
+                ]
+            })
+        });
 
-        // Generate content with images
-        // NOTE: Current Gemini models analyze images but don't generate them
-        // For actual image generation, you would need to:
-        // 1. Use Google's Imagen API (when available)
-        // 2. Use Gemini to analyze the images and create a detailed description
-        // 3. Pass that description to an image generation service
-        
-        console.log('Sending request to Gemini API...');
-        
-        const result = await model.generateContent([
-            enhancedPrompt,
-            ...imageParts
-        ]);
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(`OpenRouter API Error: ${response.status} ${response.statusText} - ${JSON.stringify(errorData)}`);
+        }
 
-        const response = await result.response;
-        const text = response.text();
+        const data = await response.json();
+        const text = data.choices[0].message.content;
 
-        console.log('Gemini API response received successfully');
+        console.log('OpenRouter API response received successfully');
 
         // IMPORTANT: Gemini analyzes images but doesn't generate them
         // This returns the first photo as a placeholder
